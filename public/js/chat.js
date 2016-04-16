@@ -104,12 +104,39 @@ $(window).load(function() {
       }
     },
     {
-      label: 'Google+',
-      cssClass: 'btn-primary',
+      label: 'GooglePlus',
+      cssClass: 'btn btn-google-plus',
       action: function(dialogRef) {
         dialogRef.close();
         //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
         window.location = 'http://localhost:3700/auth/google';
+      }
+    },
+    {
+      label: 'Facebook',
+      cssClass: 'btn btn-facebook',
+      action: function(dialogRef) {
+        dialogRef.close();
+        //window.open('http://localhost:3700/auth/facebook', 'window name', 'window settings');
+        window.location = 'http://localhost:3700/auth/facebook';
+      }
+    },
+    {
+      label: 'Twitter',
+      cssClass: 'btn btn-twitter',
+      action: function(dialogRef) {
+        dialogRef.close();
+        //window.open('http://localhost:3700/auth/twitter', 'window name', 'window settings');
+        window.location = 'http://localhost:3700/auth/twitter';
+      }
+    },
+    {
+      label: 'Github',
+      cssClass: 'btn btn-github',
+      action: function(dialogRef) {
+        dialogRef.close();
+        //window.open('http://localhost:3700/auth/github', 'window name', 'window settings');
+        window.location = 'http://localhost:3700/auth/github';
       }
     },
     {
@@ -227,6 +254,21 @@ $(window).load(function() {
   socket.on('google_roundtrip', function(googleUserData){
     _username = googleUserData.displayName;
     socket.emit('google_login', googleUserData);
+  });
+
+  socket.on('facebook_roundtrip', function(facebookUserData){
+    _username = facebookUserData.displayName;
+    socket.emit('facebook_login', facebookUserData);
+  });
+
+  socket.on('twitter_roundtrip', function(twitterUserData){
+    _username = twitterUserData.displayName;
+    socket.emit('twitter_login', twitterUserData);
+  });
+
+  socket.on('github_roundtrip', function(githubUserData){
+    _username = githubUserData.displayName;
+    socket.emit('github_login', githubUserData);
   });
 
   /**
