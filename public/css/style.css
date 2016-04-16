@@ -197,7 +197,7 @@ h1.title {
 /* line 197, ../scss/style.scss */
 #user-list {
   overflow: auto;
-  height: 70%;
+  height: 50%;
   padding: 0;
   margin: 0; }
 
