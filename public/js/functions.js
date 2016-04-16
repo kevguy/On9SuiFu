@@ -1,3 +1,7 @@
+if (typeof exports === 'undefined') {
+   var exports = { };
+}
+
 exports.removeObject = function (object, removeKey) {
 	for (key in object) {
         var user = object[key];
