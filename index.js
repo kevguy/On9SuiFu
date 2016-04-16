@@ -166,6 +166,7 @@ passport.use(new GoogleStrategy({
 
 
 var app = express();
+var session = require('express-session');
 var http = require('http');
 var server = http.createServer(app);
 var port = 3700;
@@ -179,7 +180,7 @@ app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
-app.use(express.session({ secret: 'SECRET' })); // session secret
+app.use(session({ secret: 'SECRET', resave: true, saveUninitialized: true })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
 
