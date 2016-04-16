@@ -7,6 +7,9 @@ var functions = require("./public/js/functions.js");
 
 var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
+var GithubStrategy = require('passport-github2').Strategy;
 
 
 var googleUser = null;
