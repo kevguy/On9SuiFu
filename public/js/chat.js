@@ -274,9 +274,9 @@ $(window).load(function() {
 
     }
 
-    var boardSymbols = "<table style=\"width:50%\">";
+    var boardSymbols = "<div id = \"board\"><table id = \"tboard\">";
     for(var i = 0; i < boardData.length; i++) {
-      boardSymbols = boardSymbols.concat('<tr>');
+      boardSymbols = boardSymbols.concat("<tr id = \"tboard_word\">");
       for(var j = 0; j < boardData[i].length; j++) {
         switch(boardData[i][j]) {
           case 0: boardSymbols = boardSymbols.concat('<td>\u2205</td>');break;
@@ -285,9 +285,8 @@ $(window).load(function() {
         }
       } boardSymbols = boardSymbols.concat('</tr>');
     }
-    boardSymbols = boardSymbols + '</table>';
-
-    $('#board').append(boardSymbols);    
+    boardSymbols = boardSymbols + '</table></div>';
+    $('#board').replaceWith(boardSymbols);    
 
   });
 
