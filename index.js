@@ -115,16 +115,17 @@ io.sockets.on('connection', function (socket) {
   // Load message for rooms
   socket.on('load_message', function (_clientId, roomId) {
     console.log('Loading message for room ' + roomId);
+    boardData = 'Fuck C Fu';
     var rooms = roomId.split('_');
     if (rooms.length == 2) {
       var room2 = rooms[1] + '_' + rooms[0];
       console.log('Load from ' + roomId + ' - ' + room2);
       Message.find().or([{ room_id: roomId }, { room_id: room2}]).sort({'created_at': 'asc'}).exec(function (err, messages) {
-        socket.emit('display_message', _clientId, messages);
+        socket.emit('display_message', _clientId, messages, boardData);
       });
     } else {
       Message.find({ room_id: roomId }).sort({'created_at': 'asc'}).exec(function (err, messages) {
-        socket.emit('display_message', _clientId, messages);
+        socket.emit('display_message', _clientId, messages, boardData);
       });
     }
   });
@@ -144,6 +145,7 @@ io.sockets.on('connection', function (socket) {
       if (err != null) {
         console.log('There is an error saving data ' + err);
       }
+
     });
 
     io.sockets.in(data.room_id).emit('message', _clientUserId, _clientId, data);
