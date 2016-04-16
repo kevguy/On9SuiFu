@@ -94,9 +94,27 @@ passport.deserializeUser(function(obj, done) {
 });
 
 
-
-
-
+passport.use(new GoogleStrategy({
+  clientID: '425570416506-kjrcqloc0maknnm0jeckehnlpcnmqt8m.apps.googleusercontent.com',
+  clientSecret: 'C8LpBR8B1ep7nzxNoE7ExVx8',
+  callbackURL: 'http://127.0.0.1:3700/auth/google/callback',
+  passReqToCallback: true
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+    //console.log('Google Rules');
+    googleUser = profile;
+    //console.log(googleUser.id);
+    //console.log(googleUser.displayName);
+    //done(null, user);
+    
+    process.nextTick(function () {
+      googleUser.id = profile.id;
+      googleUser.displayName = profile.displayName;
+      googleUser = profile;
+      return done(null, profile);
+    });
+    
+  }));
 
 
 
@@ -131,7 +149,6 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res) {
-    //res.redirect('/account');
     res.redirect('/');
     console.log(googleUser.displayName);
   });
@@ -147,10 +164,10 @@ var io = require('socket.io').listen(server);
 io.sockets.on('connection', function (socket) {
 
   if (googleUser != null){
-    console.log('googleUser is not null');
-    console.log('See?');
-    console.log(googleUser.displayName);
-    socket.emit('eat_shit', googleUser);
+    //console.log('googleUser is not null');
+    //console.log('See?');
+    //console.log(googleUser.displayName);
+    socket.emit('google_roundtrip', googleUser);
   }
 
 	var _clientId = socket.id;
@@ -366,27 +383,6 @@ io.sockets.on('connection', function (socket) {
 server.listen(port);
 console.log('Server started on port ' + port);
 
-passport.use(new GoogleStrategy({
-  clientID: '425570416506-kjrcqloc0maknnm0jeckehnlpcnmqt8m.apps.googleusercontent.com',
-  clientSecret: 'C8LpBR8B1ep7nzxNoE7ExVx8',
-  callbackURL: 'http://127.0.0.1:3700/auth/google/callback',
-  passReqToCallback: true
-  },
-  function(request, accessToken, refreshToken, profile, done) {
-    console.log('Google Rules');
-    googleUser = profile;
-    console.log(googleUser.id);
-    console.log(googleUser.displayName);
-    //done(null, user);
-    
-    process.nextTick(function () {
-      googleUser.id = profile.id;
-      googleUser.displayName = profile.displayName;
-      googleUser = profile;
-      return done(null, profile);
-    });
-    
-  }));
 
 // test authentication
 function ensureAuthenticated(req, res, next) {

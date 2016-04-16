@@ -108,22 +108,15 @@ $(window).load(function() {
       cssClass: 'btn-primary',
       action: function(dialogRef) {
         dialogRef.close();
-        //socket.emit('google_login');
         //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
         window.location = 'http://localhost:3700/auth/google';
-        //window.onload = function() { self.close(); };
-        //socket.emit('google_login');
       }
     },
     {
       label: 'Close',
       cssClass: 'btn-primary',
       action: function(dialogRef) {
-        //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
-        //window.location = 'http://localhost:3700/auth/google';
         dialogRef.close();
-        //window.onload = function() { self.close(); };
-        //socket.emit('google_login');
       }
     }
     ]
@@ -231,7 +224,7 @@ $(window).load(function() {
     socket.emit('load_message', _clientId, MAIN_ROOM);
   });
 
-  socket.on('eat_shit', function(googleUserData){
+  socket.on('google_roundtrip', function(googleUserData){
     _username = googleUserData.displayName;
     socket.emit('google_login', googleUserData);
   });
