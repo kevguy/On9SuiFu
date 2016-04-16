@@ -107,28 +107,23 @@ $(window).load(function() {
       label: 'Google+',
       cssClass: 'btn-primary',
       action: function(dialogRef) {
-        window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
-        /*$('#login_form').validate({
-          debug: true,
-          rules: {
-            username: {
-              required: true,
-              regex: /^\S+$/ // Check has no whitespace
-            },
-            password: "required"
-          }
-        });
-
-        var username = $('#username').val();
-        var password = $('#password').val();
-
-        if ($('#login_form').valid()) {
-          _username = username;
-          // Login user
-          socket.emit('login', { username: username, password: password });
-          $('body').after('<div id="active_room" style="display:none;">' + MAIN_ROOM + '</div>');
-          $('#profile').text(username);
-        }*/
+        dialogRef.close();
+        //socket.emit('google_login');
+        //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
+        window.location = 'http://localhost:3700/auth/google';
+        //window.onload = function() { self.close(); };
+        //socket.emit('google_login');
+      }
+    },
+    {
+      label: 'Close',
+      cssClass: 'btn-primary',
+      action: function(dialogRef) {
+        //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
+        //window.location = 'http://localhost:3700/auth/google';
+        dialogRef.close();
+        //window.onload = function() { self.close(); };
+        //socket.emit('google_login');
       }
     }
     ]
@@ -234,6 +229,11 @@ $(window).load(function() {
 
     // Display message history
     socket.emit('load_message', _clientId, MAIN_ROOM);
+  });
+
+  socket.on('eat_shit', function(googleUserData){
+    _username = googleUserData.displayName;
+    socket.emit('google_login', googleUserData);
   });
 
   /**
