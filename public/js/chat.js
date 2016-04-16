@@ -109,7 +109,7 @@ $(window).load(function() {
       action: function(dialogRef) {
         dialogRef.close();
         //window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
-        window.location = 'http://localhost:3700/auth/google';
+        window.location = 'https://suifujacks.herokuapp.com/auth/google';
       }
     },
     {
@@ -118,7 +118,7 @@ $(window).load(function() {
       action: function(dialogRef) {
         dialogRef.close();
         //window.open('http://localhost:3700/auth/facebook', 'window name', 'window settings');
-        window.location = 'http://localhost:3700/auth/facebook';
+        window.location = 'https://suifujacks.herokuapp.com/auth/facebook';
       }
     },
     {
@@ -127,7 +127,7 @@ $(window).load(function() {
       action: function(dialogRef) {
         dialogRef.close();
         //window.open('http://localhost:3700/auth/twitter', 'window name', 'window settings');
-        window.location = 'http://localhost:3700/auth/twitter';
+        window.location = 'https://suifujacks.herokuapp.com/auth/twitter';
       }
     },
     {
@@ -136,7 +136,7 @@ $(window).load(function() {
       action: function(dialogRef) {
         dialogRef.close();
         //window.open('http://localhost:3700/auth/github', 'window name', 'window settings');
-        window.location = 'http://localhost:3700/auth/github';
+        window.location = 'https://suifujacks.herokuapp.com/auth/github';
       }
     },
     {
