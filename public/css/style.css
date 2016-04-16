@@ -2,6 +2,15 @@
 html, body {
   height: 100%; }
 
+#tboard {
+  width: 75%; 
+  background: url(../images/profile.jpg) no-repeat;
+  background-size: 160px 160px;
+}
+
+#tboard_word {
+  opacity: 0.3;
+}
 /* line 5, ../scss/style.scss */
 .content {
   margin: 0 0 20px 0;
