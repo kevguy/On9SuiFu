@@ -3,7 +3,7 @@
 */
 
 // SERVER address and port
-var SERVER = 'http://localhost:3700';
+var SERVER = 'https://suifujacks.herokuapp.com';
 
 var MAIN_ROOM = 'expresschat';
 
