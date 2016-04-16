@@ -5,7 +5,8 @@ var favicon = require('serve-favicon');
 var autoIncrement = require('mongoose-auto-increment');
 var functions = require("./public/js/functions.js");
 
-var url = 'mongodb://localhost:27017/chat';
+//var url = 'mongodb://localhost:27017/chat';
+var url = 'mongodb://johndoe:iamnumber1@ds011321.mlab.com:11321/kevchat';
 var Schema = mongoose.Schema;
 var connection = mongoose.createConnection(url);
 autoIncrement.initialize(connection);
