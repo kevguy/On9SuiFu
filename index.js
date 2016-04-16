@@ -104,7 +104,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
   clientID: 'Insert Facebook clientID later',
   clientSecret: 'Insert Facebook clientSecret later',
-  callbackURL: 'http://127.0.0.1:3700/auth/facebook/callback'
+  callbackURL: 'https://suifujacks.herokuapp.com/auth/facebook/callback'
   },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
@@ -117,7 +117,7 @@ passport.use(new FacebookStrategy({
 passport.use(new TwitterStrategy({
   consumerKey: 'Insert Twitter consumerID later',
   consumerSecret: 'Insert Twitter consumerSecret later',
-  callbackURL: 'http://127.0.0.1:3700/auth/twitter/callback'
+  callbackURL: 'https://suifujacks.herokuapp.com/auth/twitter/callback'
 },
 function(accessToken, refreshToken, profile, done) {
   process.nextTick(function () {
@@ -130,7 +130,7 @@ function(accessToken, refreshToken, profile, done) {
 passport.use(new GithubStrategy({
   clientID: 'Insert Github clientID later',
   clientSecret: 'Insert Github clientSecret later',
-  callbackURL: 'http://127.0.0.1:3700/auth/github/callback'
+  callbackURL: 'https://suifujacks.herokuapp.com/auth/github/callback'
 },
 function(accessToken, refreshToken, profile, done) {
   process.nextTick(function () {
@@ -144,7 +144,7 @@ function(accessToken, refreshToken, profile, done) {
 passport.use(new GoogleStrategy({
   clientID: '425570416506-kjrcqloc0maknnm0jeckehnlpcnmqt8m.apps.googleusercontent.com',
   clientSecret: 'C8LpBR8B1ep7nzxNoE7ExVx8',
-  callbackURL: 'http://127.0.0.1:3700/auth/google/callback',
+  callbackURL: 'https://suifujacks.herokuapp.com/auth/google/callback',
   passReqToCallback: true
   },
   function(request, accessToken, refreshToken, profile, done) {
