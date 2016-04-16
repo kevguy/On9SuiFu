@@ -94,9 +94,10 @@ exports.nextMove = function(row, col) {
 			var yDirection;
 			var x;
 			var y;
-			for (direction in directions) {
-				xDirection = direction[0];
-				yDirection = direction[1];
+			var i;
+			for (i = 0; i < directions.length; i++) {
+				xDirection = directions[i][0];
+				yDirection = directions[i][1];
 
 				x = row;
 				y = col;
@@ -146,8 +147,8 @@ exports.nextMove = function(row, col) {
 			}
 
 			var tile;
-			for (tile in tilesToFlip) {
-				board[ tile[0] ][ tile[1] ] = mySymbol;
+			for (i = 0; i< tilesToFlip.length; i++) {
+				board[ tilesToFlip[i][0] ][ tilesToFlip[i][1] ] = mySymbol;
 			}
 
 			board[row][col] = mySymbol;
@@ -339,9 +340,10 @@ Reversi.prototype.moveIsValid = function(pos) {
 	var yDirection;
 	var x;
 	var y;
-	for (direction in directions) {
-		xDirection = direction[0];
-		yDirection = direction[1];
+	var i;
+	for (i = 0; i < directions.length; i++) {
+		xDirection = directions[i][0];
+		yDirection = directions[i][1];
 
 		x = row;
 		y = col;
