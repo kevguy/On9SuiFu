@@ -102,8 +102,8 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new FacebookStrategy({
-  clientID: 'Insert Facebook clientID later',
-  clientSecret: 'Insert Facebook clientSecret later',
+  clientID: '266941663645680',
+  clientSecret: '0206b5fab28f0558644e39cdc730aa6f',
   callbackURL: 'https://suifujacks.herokuapp.com/auth/facebook/callback'
   },
   function(accessToken, refreshToken, profile, done) {
@@ -115,8 +115,8 @@ passport.use(new FacebookStrategy({
 ));
 
 passport.use(new TwitterStrategy({
-  consumerKey: 'Insert Twitter consumerID later',
-  consumerSecret: 'Insert Twitter consumerSecret later',
+  consumerKey: 'cZtdIeNfhpwA5FpqnZtYGf79G',
+  consumerSecret: '6u0MZmzV03XhJBnMnI6lx6MHw0qXkeMkYkTWAkRqNeRCjn9SWM',
   callbackURL: 'https://suifujacks.herokuapp.com/auth/twitter/callback'
 },
 function(accessToken, refreshToken, profile, done) {
