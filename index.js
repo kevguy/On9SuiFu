@@ -5,6 +5,10 @@ var favicon = require('serve-favicon');
 var autoIncrement = require('mongoose-auto-increment');
 var functions = require("./public/js/functions.js");
 
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
+
+
 var reversi = require("./public/js/reversi.js");
 //var url = 'mongodb://localhost:27017/chat';
 var url = 'mongodb://johndoe:iamnumber1@ds011321.mlab.com:11321/kevchat';
@@ -78,6 +82,27 @@ messageSchema.plugin(autoIncrement.plugin, {
 var User = connection.model('User', userSchema);
 var Message = connection.model('Message', messageSchema);
 
+// serialize and deserialize
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
+passport.use(new GoogleStrategy({
+  clientID: '425570416506-kjrcqloc0maknnm0jeckehnlpcnmqt8m.apps.googleusercontent.com',
+  clientSecret: 'C8LpBR8B1ep7nzxNoE7ExVx8',
+  callbackURL: 'http://127.0.0.1:3700/auth/google/callback',
+  passReqToCallback: true
+  },
+  function(request, accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      return done(null, profile);
+    });
+  }
+));
+
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
@@ -92,9 +117,25 @@ app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.get("/", function(req, res){
   res.render("index");
 });
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read'
+  ] }
+));
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/account');
+  });
 
 // Require public folder resources
 app.use(express.static(__dirname + '/public'));
@@ -268,3 +309,9 @@ io.sockets.on('connection', function (socket) {
 
 server.listen(port);
 console.log('Server started on port ' + port);
+
+// test authentication
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}

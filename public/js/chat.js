@@ -102,6 +102,34 @@ $(window).load(function() {
           $('#profile').text(username);
         }
       }
+    },
+    {
+      label: 'Google+',
+      cssClass: 'btn-primary',
+      action: function(dialogRef) {
+        window.open('http://localhost:3700/auth/google', 'window name', 'window settings');
+        /*$('#login_form').validate({
+          debug: true,
+          rules: {
+            username: {
+              required: true,
+              regex: /^\S+$/ // Check has no whitespace
+            },
+            password: "required"
+          }
+        });
+
+        var username = $('#username').val();
+        var password = $('#password').val();
+
+        if ($('#login_form').valid()) {
+          _username = username;
+          // Login user
+          socket.emit('login', { username: username, password: password });
+          $('body').after('<div id="active_room" style="display:none;">' + MAIN_ROOM + '</div>');
+          $('#profile').text(username);
+        }*/
+      }
     }
     ]
   });
