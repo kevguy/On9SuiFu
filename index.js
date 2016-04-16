@@ -128,8 +128,8 @@ function(accessToken, refreshToken, profile, done) {
 ));
 
 passport.use(new GithubStrategy({
-  clientID: 'Insert Github clientID later',
-  clientSecret: 'Insert Github clientSecret later',
+  clientID: '96f1137be6f7b5efc4eb',
+  clientSecret: '78b880505c5f255abdfc5d6413d269a5e94f3b2d',
   callbackURL: 'https://suifujacks.herokuapp.com/auth/github/callback'
 },
 function(accessToken, refreshToken, profile, done) {
