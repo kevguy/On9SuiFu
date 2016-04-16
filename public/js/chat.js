@@ -233,7 +233,8 @@ $(window).load(function() {
       $('#' + _clientId).remove();
     });
 
-  socket.on('display_message', function (_clientId, messages) {
+  socket.on('display_message', function (_clientId, messages, boardData) {
+    console.log('fuck');
     $('#' + MAIN_ROOM).html('');
 
     for (key in messages) {
@@ -265,7 +266,18 @@ $(window).load(function() {
       '<div class="date">' + dateString + '</div>' +
       '</div>';
       $('#' + MAIN_ROOM).append(html).scrollTop($('#' + MAIN_ROOM)[0].scrollHeight);
+
+      /*
+      console.log('Trying to add new stuff');
+      var html2 = '<div class="' + cls + '">' + boardData + ' oh boy ' + '</div>';
+      $('#' + MAIN_ROOM).append(html2);
+      */
+
     }
+
+    var html2 = '<div>' + boardData + ' oh boy ' + '</div>';
+    $('#board').text("Shit");    
+
   });
 
   /**
