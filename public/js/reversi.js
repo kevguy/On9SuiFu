@@ -94,7 +94,7 @@ exports.nextMove = function(row, col) {
 			var yDirection;
 			var x;
 			var y;
-			for (direction of directions) {
+			for (direction in directions) {
 				xDirection = direction[0];
 				yDirection = direction[1];
 
@@ -146,7 +146,7 @@ exports.nextMove = function(row, col) {
 			}
 
 			var tile;
-			for (tile of tilesToFlip) {
+			for (tile in tilesToFlip) {
 				board[ tile[0] ][ tile[1] ] = mySymbol;
 			}
 
@@ -339,7 +339,7 @@ Reversi.prototype.moveIsValid = function(pos) {
 	var yDirection;
 	var x;
 	var y;
-	for (direction of directions) {
+	for (direction in directions) {
 		xDirection = direction[0];
 		yDirection = direction[1];
 
