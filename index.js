@@ -115,7 +115,16 @@ io.sockets.on('connection', function (socket) {
   // Load message for rooms
   socket.on('load_message', function (_clientId, roomId) {
     console.log('Loading message for room ' + roomId);
-    boardData = 'Fuck C Fu';
+    boardData = [
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,2,1,0,0,0],
+      [0,0,0,1,2,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0],
+    ];
     var rooms = roomId.split('_');
     if (rooms.length == 2) {
       var room2 = rooms[1] + '_' + rooms[0];
