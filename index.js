@@ -216,7 +216,7 @@ app.get('/auth/twitter/callback',
   });
 
 app.get('/auth/github',
-  passport.authenticate('github'),
+  passport.authenticate('github', { scope: [ 'user:email' ] }),
   function(req, res){});
 app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/' }),
