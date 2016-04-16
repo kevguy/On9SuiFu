@@ -10,6 +10,9 @@ var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 
 var googleUser = null;
+var facebookUser = null;
+var twitterUser = null;
+var githubUser = null;
 
 var reversi = require("./public/js/reversi.js");
 //var url = 'mongodb://localhost:27017/chat';
@@ -93,6 +96,45 @@ passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
 
+passport.use(new FacebookStrategy({
+  clientID: 'Insert Facebook clientID later',
+  clientSecret: 'Insert Facebook clientSecret later',
+  callbackURL: 'http://127.0.0.1:3700/auth/facebook/callback'
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      facebookUser = profile;
+      return done(null, profile);
+    });
+  }
+));
+
+passport.use(new TwitterStrategy({
+  consumerKey: 'Insert Twitter consumerID later',
+  consumerSecret: 'Insert Twitter consumerSecret later',
+  callbackURL: 'http://127.0.0.1:3700/auth/twitter/callback'
+},
+function(accessToken, refreshToken, profile, done) {
+  process.nextTick(function () {
+    twitterUser = profile;
+    return done(null, profile);
+  });
+}
+));
+
+passport.use(new GithubStrategy({
+  clientID: 'Insert Github clientID later',
+  clientSecret: 'Insert Github clientSecret later',
+  callbackURL: 'http://127.0.0.1:3700/auth/github/callback'
+},
+function(accessToken, refreshToken, profile, done) {
+  process.nextTick(function () {
+    githubUser = profile;
+    return done(null, profile);
+  });
+}
+));
+
 
 passport.use(new GoogleStrategy({
   clientID: '425570416506-kjrcqloc0maknnm0jeckehnlpcnmqt8m.apps.googleusercontent.com',
@@ -140,6 +182,36 @@ app.get("/", function(req, res){
   res.render("index");
 });
 
+app.get('/auth/facebook',
+  passport.authenticate('facebook'),
+  function(req, res){});
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+    console.log(facebookUser.displayName);
+  });
+
+app.get('/auth/twitter',
+  passport.authenticate('twitter'),
+  function(req, res){});
+app.get('/auth/twitter/callback',
+  passport.authenticate('twitter', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+    console.log(twitterUser.displayName);
+  });
+
+app.get('/auth/github',
+  passport.authenticate('github'),
+  function(req, res){});
+app.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/' }),
+  function(req, res) {
+    res.redirect('/');
+    console.log(githubUser.displayName);
+  });
+
 app.get('/auth/google',
   passport.authenticate('google', { scope: [
     'https://www.googleapis.com/auth/plus.login',
@@ -168,6 +240,27 @@ io.sockets.on('connection', function (socket) {
     //console.log('See?');
     //console.log(googleUser.displayName);
     socket.emit('google_roundtrip', googleUser);
+  }
+
+  if (facebookUser != null){
+    //console.log('facebookUser is not null');
+    //console.log('See?');
+    //console.log(facebookUser.displayName);
+    socket.emit('facebook_roundtrip', facebookUser);
+  }
+
+  if (twitterUser != null){
+    //console.log('twitterUser is not null');
+    //console.log('See?');
+    //console.log(twitterUser.displayName);
+    socket.emit('twitter_roundtrip', twitterUser);
+  }
+
+  if (githubUser != null){
+    //console.log('githubUser is not null');
+    //console.log('See?');
+    //console.log(githubUser.displayName);
+    socket.emit('github_roundtrip', githubUser);
   }
 
 	var _clientId = socket.id;
@@ -321,10 +414,6 @@ io.sockets.on('connection', function (socket) {
 
   // Google Login
   socket.on('google_login', function(googleUserData){
-
-
-
-
     console.log('starting running google_login');
     User.findOne({oauthID: googleUserData.id}, function(err, user){
 
@@ -366,6 +455,135 @@ io.sockets.on('connection', function (socket) {
     });
   });
 
+  // Facebook Login
+  socket.on('facebook_login', function(facebookUserData){
+    console.log('starting running facebook_login');
+    User.findOne({oauthID: facebookUserData.id}, function(err, user){
+
+      if (user == null){
+        // can't find user in database
+        // action: make this user online and  save this user into our database
+        var newUser = new User({
+          oauthID: facebookUserData.id,
+          username: facebookUserData.displayName,
+          password: 'Not Required'
+        });
+
+        // Save user to database
+        newUser.save(function (err) {
+          console.log(err);
+
+          if (err == null) {
+            // Make this user online
+            User.findOne({ username: facebookUserData.displayname }, function (err, user) {
+              console.log('User ' + user.username + ' is online');
+
+              users.push({oauthID: facebookUserData.id, "client_id" : _clientId, "user_name" : facebookUserData.displayName, "user_id": user.user_id});
+
+              userSockets[_clientId] = socket;
+              
+              // Add new user to channel
+              io.sockets.emit('show_user', user.user_id, _clientId, users);
+            });
+          }
+        });
+      } else {
+        // This user has already registered, log this guy in
+        users.push({oauthID: facebookUserData.id, "client_id" : _clientId, "user_name" : facebookUserData.displayName, "user_id": user.user_id});
+        userSockets[_clientId] = socket;
+
+        // Add new user to channel
+        io.sockets.emit('show_user', user.user_id, _clientId, users);
+      }
+    });
+  });
+
+  // Twitter Login
+  socket.on('twitter_login', function(twitterUserData){
+    console.log('starting running twitter_login');
+    User.findOne({oauthID: twitterUserData.id}, function(err, user){
+
+      if (user == null){
+        // can't find user in database
+        // action: make this user online and  save this user into our database
+        var newUser = new User({
+          oauthID: twitterUserData.id,
+          username: twitterUserData.displayName,
+          password: 'Not Required'
+        });
+
+        // Save user to database
+        newUser.save(function (err) {
+          console.log(err);
+
+          if (err == null) {
+            // Make this user online
+            User.findOne({ username: twitterUserData.displayname }, function (err, user) {
+              console.log('User ' + user.username + ' is online');
+
+              users.push({oauthID: twitterUserData.id, "client_id" : _clientId, "user_name" : twitterUserData.displayName, "user_id": user.user_id});
+
+              userSockets[_clientId] = socket;
+              
+              // Add new user to channel
+              io.sockets.emit('show_user', user.user_id, _clientId, users);
+            });
+          }
+        });
+      } else {
+        // This user has already registered, log this guy in
+        users.push({oauthID: twitterUserData.id, "client_id" : _clientId, "user_name" : twitterUserData.displayName, "user_id": user.user_id});
+        userSockets[_clientId] = socket;
+
+        // Add new user to channel
+        io.sockets.emit('show_user', user.user_id, _clientId, users);
+      }
+    });
+  });
+
+  // Github Login
+  socket.on('github_login', function(githubUserData){
+    console.log('starting running github_login');
+    User.findOne({oauthID: githubUserData.id}, function(err, user){
+
+      if (user == null){
+        // can't find user in database
+        // action: make this user online and  save this user into our database
+        var newUser = new User({
+          oauthID: githubUserData.id,
+          username: githubUserData.displayName,
+          password: 'Not Required'
+        });
+
+        // Save user to database
+        newUser.save(function (err) {
+          console.log(err);
+
+          if (err == null) {
+            // Make this user online
+            User.findOne({ username: githubUserData.displayname }, function (err, user) {
+              console.log('User ' + user.username + ' is online');
+
+              users.push({oauthID: githubUserData.id, "client_id" : _clientId, "user_name" : githubUserData.displayName, "user_id": user.user_id});
+
+              userSockets[_clientId] = socket;
+              
+              // Add new user to channel
+              io.sockets.emit('show_user', user.user_id, _clientId, users);
+            });
+          }
+        });
+      } else {
+        // This user has already registered, log this guy in
+        users.push({oauthID: githubUserData.id, "client_id" : _clientId, "user_name" : githubUserData.displayName, "user_id": user.user_id});
+        userSockets[_clientId] = socket;
+
+        // Add new user to channel
+        io.sockets.emit('show_user', user.user_id, _clientId, users);
+      }
+    });
+  });
+
   // Listen for disconnect event
   socket.on('disconnect', function () {
     // Update current users online
@@ -375,6 +593,9 @@ io.sockets.on('connection', function (socket) {
     io.sockets.emit('remove_user', _clientId, users);
 
     googleUser = null;
+    facebookUser = null;
+    twitterUser = null;
+    githubUser = null;
 
     console.log('User ' + _clientId + ' disconnected');
   });
