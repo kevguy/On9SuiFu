@@ -271,6 +271,10 @@ $(window).load(function() {
     socket.emit('github_login', githubUserData);
   });
 
+  socket.on('close_login', function(){
+    loginDialog.close();
+  });
+
   /**
   * _clientId id of current user socket
   * room_id room_id that user want to connect to
