@@ -11,6 +11,8 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GithubStrategy = require('passport-github2').Strategy;
 
+var isAbout=false;
+
 
 var googleUser = null;
 var facebookUser = null;
@@ -182,7 +184,13 @@ app.use(passport.session());
 
 
 app.get("/", function(req, res){
+  isAbout = false;
   res.render("index");
+});
+
+app.get("/about", function(req, res){
+  isAbout = true;
+  res.render("about");
 });
 
 app.get('/auth/facebook',
@@ -237,6 +245,10 @@ var io = require('socket.io').listen(server);
 
 // Initiate socket to handle all connection
 io.sockets.on('connection', function (socket) {
+
+  if (isAbout){
+    socket.emit('close_login');
+  }
 
   if (googleUser != null){
     //console.log('googleUser is not null');
