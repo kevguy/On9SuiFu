@@ -5,6 +5,7 @@ var favicon = require('serve-favicon');
 var autoIncrement = require('mongoose-auto-increment');
 var functions = require("./public/js/functions.js");
 
+var reversi = require("./public/js/reversi.js");
 //var url = 'mongodb://localhost:27017/chat';
 var url = 'mongodb://johndoe:iamnumber1@ds011321.mlab.com:11321/kevchat';
 var Schema = mongoose.Schema;
@@ -139,6 +140,10 @@ io.sockets.on('connection', function (socket) {
     }
   });
 
+  // Initialize reversis
+  //var playerX = reversi.createHuman("X");
+  //var playerO = reversi.createHuman("O");
+  reversi.Main();
   // Trigger on send event
   socket.on('send', function (data) {
     var _clientUser = functions.findByKey(users, 'client_id', _clientId);
@@ -156,8 +161,23 @@ io.sockets.on('connection', function (socket) {
       }
 
     });
-
+	   // Reversi logic
+	   //var row = data.message.charAt(0);	// [1-8]
+	   //var col = data.message.charAt(1);	// [a-h]
+	   
     io.sockets.in(data.room_id).emit('message', _clientUserId, _clientId, data);
+    if (data.message.search("@Reversi ") == 0){
+	    console.log(data.message.substr(9,2));
+	    console.log(data.message);
+		destination=data.message.substr(9,2);
+		console.log(destination);
+		col=destination.charAt(0).charCodeAt(0)-96
+		row=destination.charAt(1);
+		destination.charCodeAt(0)
+		console.log( "row = " + row);
+		console.log( "col = " + col );
+		reversi.nextMove(row, col);
+	}
   });
 
   socket.on('subscribe', function (_clientUserId, clientId, room_id) {
