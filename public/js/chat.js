@@ -234,7 +234,6 @@ $(window).load(function() {
     });
 
   socket.on('display_message', function (_clientId, messages, boardData) {
-    console.log('fuck');
     $('#' + MAIN_ROOM).html('');
 
     for (key in messages) {
@@ -275,8 +274,20 @@ $(window).load(function() {
 
     }
 
-    var html2 = '<div>' + boardData + ' oh boy ' + '</div>';
-    $('#board').text("Shit");    
+    var boardSymbols = "<table style=\"width:50%\">";
+    for(var i = 0; i < boardData.length; i++) {
+      boardSymbols = boardSymbols.concat('<tr>');
+      for(var j = 0; j < boardData[i].length; j++) {
+        switch(boardData[i][j]) {
+          case 0: boardSymbols = boardSymbols.concat('<td>\u2205</td>');break;
+          case 1: boardSymbols = boardSymbols.concat('<td>\xA4</td>');break;
+          case 2: boardSymbols = boardSymbols.concat('<td>\u2207</td>');break;
+        }
+      } boardSymbols = boardSymbols.concat('</tr>');
+    }
+    boardSymbols = boardSymbols + '</table>';
+
+    $('#board').append(boardSymbols);    
 
   });
 
