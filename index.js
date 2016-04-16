@@ -116,7 +116,7 @@ passport.use(new FacebookStrategy({
 
 passport.use(new TwitterStrategy({
   consumerKey: 'cZtdIeNfhpwA5FpqnZtYGf79G',
-  consumerSecret: '6u0MZmzV03XhJBnMnI6lx6MHw0qXkeMkYkTWAkRqNeRCjn9SWM',
+  consumerSecret: '   6u0MZmzV03XhJBnMnI6lx6MHw0qXkeMkYkTWAkRqNeRCjn9SWM',
   callbackURL: 'https://suifujacks.herokuapp.com/auth/twitter/callback'
 },
 function(accessToken, refreshToken, profile, done) {
@@ -179,6 +179,7 @@ app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
+app.use(express.session({ secret: 'SECRET' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
 
