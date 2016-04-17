@@ -277,9 +277,6 @@ $(window).load(function() {
     loginDialog.close();
   });
 
-  socket.on('close_login', function(){
-    loginDialog.close();
-  });
 
   /**
   * _clientId id of current user socket
