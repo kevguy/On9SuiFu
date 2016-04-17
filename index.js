@@ -346,8 +346,8 @@ io.sockets.on('connection', function (socket) {
 	    console.log(data.message);
 		destination=data.message.substr(9,2);
 		console.log(destination);
-		col=destination.charAt(0).charCodeAt(0)-96
-		row=destination.charAt(1);
+		col=destination.charAt(0).charCodeAt(0)-97
+		row=destination.charAt(1)-1;
 		destination.charCodeAt(0)
 		console.log( "row = " + row);
 		console.log( "col = " + col );
