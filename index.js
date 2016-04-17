@@ -339,33 +339,30 @@ io.sockets.on('connection', function (socket) {
 	   // Reversi logic
 	   //var row = data.message.charAt(0);	// [1-8]
 	   //var col = data.message.charAt(1);	// [a-h]
-	   
-    io.sockets.in(data.room_id).emit('message', _clientUserId, _clientId, data);
-    if (data.message.search("@Reversi ") == 0){
-	    console.log(data.message.substr(9,2));
-	    console.log(data.message);
-		destination=data.message.substr(9,2);
-		console.log(destination);
-		col=destination.charAt(0).charCodeAt(0)-97
-		row=destination.charAt(1)-1;
-		destination.charCodeAt(0)
-		console.log( "row = " + row);
-		console.log( "col = " + col );
-		reversi.nextMove(row, col);
-    //document.getElementById('tboard').innerHTML='ABC';
-    boardData = reversi.getBoard();
-    console.log("Start printing the board")
-    for (i=0;i<8;i++){
-      msg='';
-      for (j=0;j<8;j++){
-        msg+=boardData[i][j];
+	   if (data.message.search("@Reversi ") == 0){
+      console.log(data.message.substr(9,2));
+      console.log(data.message);
+      destination=data.message.substr(9,2);
+      console.log(destination);
+      col=destination.charAt(0).charCodeAt(0)-97
+      row=destination.charAt(1)-1;
+      destination.charCodeAt(0)
+      console.log( "row=" + row);
+      console.log( "col=" + col );
+      reversi.nextMove(row, col);
+      //document.getElementById('tboard').innerHTML='ABC';
+      boardData = reversi.getBoard();
+      console.log("Start printing the board")
+      for (i=0;i<8;i++){
+        msg='';
+        for (j=0;j<8;j++){
+          msg+=boardData[i][j];
+        }
+        console.log(msg);
       }
-      console.log(msg);
-      window.alert(msg);
     }
-      
-    socket.emit('change_board',_clientUserId, _clientId, boardData);
-	}
+    io.sockets.in(data.room_id).emit('change_board', _clientUserId, _clientId);
+
   });
 
   socket.on('subscribe', function (_clientUserId, clientId, room_id) {
