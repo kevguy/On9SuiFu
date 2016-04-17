@@ -354,10 +354,14 @@ io.sockets.on('connection', function (socket) {
 		reversi.nextMove(row, col);
     //document.getElementById('tboard').innerHTML='ABC';
     boardData = reversi.getBoard();
-    for (i=0;i<8;i++)
+    for (i=0;i<8;i++){
+      msg=null;
       for (j=0;j<8;j++){
-        console.log(boardData[i][j]);
+        msg+=boardData[i][j];
       }
+      console.log(msg);
+    }
+      
     socket.emit('change_board',_clientUserId, _clientId, boardData);
 	}
   });
