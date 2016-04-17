@@ -362,35 +362,15 @@ $(window).load(function() {
     $('#board').replaceWith(boardSymbols);    
 
   });
-  socket.on('change_board', function (_clientId, messages) {
+  socket.on('change_board', function (_clientId, messages, boardData) {
     console.log("Printing board.......");
-    boardData = [
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,2,1,0,0,0],
-      [0,0,0,1,1,1,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0]
-    ];
-    if (step > 1) {
-      boardData = [
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,2,2,2,0,0],
-      [0,0,0,1,1,1,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0]
-    ];
-    }
+    board_data = boardData;
+    
     var boardSymbols = "<div id = \"board\"><table id = \"tboard\">";
-    for(var i = 0; i < boardData.length; i++) {
+    for(var i = 0; i < board_data.length; i++) {
       boardSymbols = boardSymbols.concat("<tr id = \"tboard_word\">");
-      for(var j = 0; j < boardData[i].length; j++) {
-        switch(boardData[i][j]) {
+      for(var j = 0; j < board_data[i].length; j++) {
+        switch(board_data[i][j]) {
           case 0: boardSymbols = boardSymbols.concat('<td>\u2205</td>');break;
           case 1: boardSymbols = boardSymbols.concat('<td>\xA4</td>');break;
           case 2: boardSymbols = boardSymbols.concat('<td>\u2207</td>');break;
