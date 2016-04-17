@@ -360,8 +360,9 @@ io.sockets.on('connection', function (socket) {
         }
         console.log(msg);
       }
+      io.sockets.in(data.room_id).emit('change_board', _clientUserId, _clientId);
     }
-    io.sockets.in(data.room_id).emit('change_board', _clientUserId, _clientId);
+    
 
   });
 
