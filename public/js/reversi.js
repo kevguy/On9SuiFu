@@ -18,6 +18,10 @@ exports.Main = function() {
 	// game.startGame();
 }
 
+exports.getBoard=function(){
+	return game.getBoard();
+}
+
 exports.createHuman = function(piece) {
 	var human = new Human(piece);
 	return human;
