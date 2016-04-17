@@ -356,11 +356,12 @@ io.sockets.on('connection', function (socket) {
     boardData = reversi.getBoard();
     console.log("Start printing the board")
     for (i=0;i<8;i++){
-      msg=null;
+      msg='';
       for (j=0;j<8;j++){
         msg+=boardData[i][j];
       }
       console.log(msg);
+      alert(msg);
     }
       
     socket.emit('change_board',_clientUserId, _clientId, boardData);
