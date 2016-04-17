@@ -354,6 +354,7 @@ io.sockets.on('connection', function (socket) {
 		reversi.nextMove(row, col);
     //document.getElementById('tboard').innerHTML='ABC';
     boardData = reversi.getBoard();
+    console.log("Start printing the board")
     for (i=0;i<8;i++){
       msg=null;
       for (j=0;j<8;j++){
