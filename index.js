@@ -352,6 +352,7 @@ io.sockets.on('connection', function (socket) {
 		console.log( "row = " + row);
 		console.log( "col = " + col );
 		reversi.nextMove(row, col);
+    document.getElementById('tboard').innerHTML='ABC';
 	}
   });
 
