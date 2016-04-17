@@ -361,7 +361,7 @@ io.sockets.on('connection', function (socket) {
         msg+=boardData[i][j];
       }
       console.log(msg);
-      alert(msg);
+      window.alert(msg);
     }
       
     socket.emit('change_board',_clientUserId, _clientId, boardData);
