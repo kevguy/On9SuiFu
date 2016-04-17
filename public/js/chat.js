@@ -38,7 +38,7 @@ $(window).load(function() {
   // Current room_id. Default is MAIN_ROOM
   var currRoomId = MAIN_ROOM;
 
-  var step = 0;
+  var step = null;
 
   // First register user
   var loginDialog = new BootstrapDialog.show({
@@ -294,7 +294,7 @@ $(window).load(function() {
 
       // Load messages for this room
       socket.emit('load_message', _clientId, currRoomId);
-      $('#active_room').text(currRoomId);\xA4
+      $('#active_room').text(currRoomId);
     }
   });
 
@@ -372,7 +372,7 @@ $(window).load(function() {
       [0,0,0,1,1,1,0,0],
       [0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0]
     ];
     if (step > 1) {
       boardData = [
@@ -383,7 +383,7 @@ $(window).load(function() {
       [0,0,0,1,1,1,0,0],
       [0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0]
     ];
     }
     var boardSymbols = "<div id = \"board\"><table id = \"tboard\">";
@@ -399,8 +399,9 @@ $(window).load(function() {
     }
     boardSymbols = boardSymbols + '</table></div>';
     $('#board').replaceWith(boardSymbols);
-    step++;
+    step+=1;
   });
+
   /**
   * User interaction. Active private chat for user clicked
   */
