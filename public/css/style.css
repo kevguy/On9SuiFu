@@ -3,7 +3,7 @@ html, body {
   height: 100%; }
 
 #tboard {
-  width: 75%; 
+  width: 160px; 
   background: url(../images/profile.jpg) no-repeat;
   background-size: 160px 160px;
 }

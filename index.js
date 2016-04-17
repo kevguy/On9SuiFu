@@ -12,7 +12,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var GithubStrategy = require('passport-github2').Strategy;
 
 var isAbout=false;
-
+var MAIN_ROOM = 'expresschat';
 
 var googleUser = null;
 var facebookUser = null;
@@ -352,7 +352,13 @@ io.sockets.on('connection', function (socket) {
 		console.log( "row = " + row);
 		console.log( "col = " + col );
 		reversi.nextMove(row, col);
-    document.getElementById('tboard').innerHTML='ABC';
+    //document.getElementById('tboard').innerHTML='ABC';
+    boardData = reversi.getBoard();
+    for (i=0;i<8;i++)
+      for (j=0;j<8;j++){
+        console.log(boardData[i][j]);
+      }
+    socket.emit('change_board',_clientUserId, _clientId, boardData);
 	}
   });
 

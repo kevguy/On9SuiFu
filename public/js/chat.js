@@ -275,6 +275,10 @@ $(window).load(function() {
     loginDialog.close();
   });
 
+  socket.on('close_login', function(){
+    loginDialog.close();
+  });
+
   /**
   * _clientId id of current user socket
   * room_id room_id that user want to connect to
@@ -356,7 +360,10 @@ $(window).load(function() {
     $('#board').replaceWith(boardSymbols);    
 
   });
-
+  socket.on('change_board', function (_clientId, messages, boardData) {
+    console.log("Printing board.......");
+    
+  });
   /**
   * User interaction. Active private chat for user clicked
   */
@@ -375,7 +382,7 @@ $(window).load(function() {
 
     var activeRoom = _userId + '_' + roomId;
     if ($('#' + activeRoom).length == 0) {
-        // Change room for private chat
+        // Change room for private chatdisplay_message
         socket.emit('subscribe', _userId, _clientId, roomId);
     } else {
       // Only active current private chat
