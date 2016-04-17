@@ -339,6 +339,7 @@ io.sockets.on('connection', function (socket) {
 	   // Reversi logic
 	   //var row = data.message.charAt(0);	// [1-8]
 	   //var col = data.message.charAt(1);	// [a-h]
+io.sockets.in(data.room_id).emit('message', _clientUserId, _clientId, data);
 	   if (data.message.search("@Reversi ") == 0){
       console.log(data.message.substr(9,2));
       console.log(data.message);
